@@ -31,7 +31,7 @@ def quadratic(xs, ys):
     a = 0
     b = 0
     c = 0
-    n = 0.01
+    n = 0.0001
 
     def loss():
         nonlocal a, b, c, n
@@ -44,13 +44,13 @@ def quadratic(xs, ys):
             y = ys[i]
             yp = a * x**2 + b * x + c
             err = y - yp
-            da += 2 * err * x**2
-            db += 2 * err * x
-            dc += 2 * err
+            da += -2 * err * x**2
+            db += -2 * err * x
+            dc += -2 * err
             error += math.pow(err, 2)
-        da *= (-2/len(xs))
-        db *= (-2/len(xs))
-        dc *= (-2/len(xs))
+        da /= len(xs)
+        db /= len(xs)
+        dc /= len(xs)
         a -= n * da
         b -= n * db
         c -= n * dc
