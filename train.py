@@ -58,3 +58,29 @@ def quadratic(xs, ys):
         return error, a, b, c
 
     return loss
+
+def polynomial(xs, ys, power):
+    a = [0] * (power + 1)
+    n = 0.0001
+
+    def loss():
+        nonlocal a, n
+        da = [0] * (power + 1)
+        error = 0
+        for i in range(len(xs)):
+            x = xs[i]
+            y = ys[i]
+            yp = 0
+            for j in range(power):
+                yp += a[j]*(x**j)
+            err = y - yp
+            for j in range(power):
+                da[j] += -2 * err * (x**j)
+            error += math.pow(err, 2)
+        for i in range(power):
+            da[i] /= len(xs)
+            a[i] -= n * da[i]
+        error /= len(xs)
+        return error, a
+
+    return loss
